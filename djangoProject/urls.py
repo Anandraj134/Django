@@ -25,5 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
-    path('ex1', views.ex1, name='ex1')
+    path('ex1', views.ex1, name='ex1'),
+    path('analyze', views.analyze, name='analyze'),
+    path('removepunc', views.removepunc, name='removepunc'),
+    path('textanalyzer', views.textanalyzer, name='textanalyzer')
 ]

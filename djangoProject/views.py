@@ -1,8 +1,9 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("My Name is Anand")
+    return render(request, "index.html")
 
 
 def about(request):
@@ -18,3 +19,29 @@ def ex1(request):
     <a href="https://www.youtube.com/watch?v=SOessajf_Ik"> Baatein Ye Kabhi Na from Khamoshiyan </a><br>
     <a href="https://www.youtube.com/watch?v=GLGuLXKT9Ng"> Raataan Lambiyan from Shershaah </a><br>
     """)
+
+
+def analyze(request):
+    djtext = request.GET.get('text', 'default')
+    remove = request.GET.get('removepunc', 'off')
+    analyzed = ""
+    punc = """!()-{}[];:'"\,<>./?@#$%^&*_~"""
+    if remove == 'on':
+        for i in djtext:
+            if i not in punc:
+                analyzed += i
+    else:
+        analyzed = "You haven't checked the checkbox"
+    params = {
+        'purpose': 'Removed Punctuations',
+        'analyzed_text': analyzed
+    }
+    return render(request, 'analyze.html', params)
+
+
+def textanalyzer(request):
+    return HttpResponse("Text Analyzer")
+
+
+def removepunc(request):
+    return HttpResponse("Text Analyzer")
