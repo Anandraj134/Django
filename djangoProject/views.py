@@ -24,11 +24,30 @@ def ex1(request):
 def analyze(request):
     djtext = request.GET.get('text', 'default')
     remove = request.GET.get('removepunc', 'off')
+    fullcaps = request.GET.get('fullcaps', 'off')
+    lowercaps = request.GET.get('lowercaps', 'off')
+    extraspace = request.GET.get('extraspace', 'off')
+    newline = request.GET.get('newline', 'off')
+
     analyzed = ""
     punc = """!()-{}[];:'"\,<>./?@#$%^&*_~"""
     if remove == 'on':
         for i in djtext:
             if i not in punc:
+                analyzed += i
+    elif fullcaps == 'on':
+        analyzed = str(djtext).upper()
+    elif lowercaps == 'on':
+        analyzed = str(djtext).lower()
+    elif extraspace == 'on':
+        for i in range(len(djtext)):
+            if djtext[i] == ' ' and djtext[i+1] == ' ':
+                pass
+            else:
+                analyzed += djtext[i]
+    elif newline == 'on':
+        for i in djtext:
+            if i != "\n":
                 analyzed += i
     else:
         analyzed = "You haven't checked the checkbox"
