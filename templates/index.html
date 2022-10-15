@@ -39,7 +39,7 @@
     <strong>Hello there,</strong> you can analyze your text by this website
 </div>
 <div class="container-fluid">
-    <form action="/analyze" method="get">
+    <form action="/analyze" method="post"> {% csrf_token %}
         <div>
             <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
             <textarea class="form-control" name="text" id="exampleFormControlTextarea1" rows="3"></textarea>

@@ -22,35 +22,43 @@ def ex1(request):
 
 
 def analyze(request):
-    djtext = request.GET.get('text', 'default')
-    remove = request.GET.get('removepunc', 'off')
-    fullcaps = request.GET.get('fullcaps', 'off')
-    lowercaps = request.GET.get('lowercaps', 'off')
-    extraspace = request.GET.get('extraspace', 'off')
-    newline = request.GET.get('newline', 'off')
+    djtext = request.POST.get('text', 'default')
+    remove = request.POST.get('removepunc', 'off')
+    fullcaps = request.POST.get('fullcaps', 'off')
+    lowercaps = request.POST.get('lowercaps', 'off')
+    extraspace = request.POST.get('extraspace', 'off')
+    newline = request.POST.get('newline', 'off')
 
     analyzed = ""
     punc = """!()-{}[];:'"\,<>./?@#$%^&*_~"""
     if remove == 'on':
+        analyzed = ""
         for i in djtext:
             if i not in punc:
                 analyzed += i
-    elif fullcaps == 'on':
+        djtext = analyzed
+    if fullcaps == 'on':
+        analyzed = ""
         analyzed = str(djtext).upper()
-    elif lowercaps == 'on':
+        djtext = analyzed
+    if lowercaps == 'on':
+        analyzed = ""
         analyzed = str(djtext).lower()
-    elif extraspace == 'on':
+        djtext = analyzed
+    if extraspace == 'on':
+        analyzed = ""
         for i in range(len(djtext)):
             if djtext[i] == ' ' and djtext[i+1] == ' ':
                 pass
             else:
                 analyzed += djtext[i]
-    elif newline == 'on':
+        djtext = analyzed
+    if newline == 'on':
+        analyzed = ""
         for i in djtext:
-            if i != "\n":
+            if i != "\n" and i != "\r":
                 analyzed += i
-    else:
-        analyzed = "You haven't checked the checkbox"
+        djtext = analyzed
     params = {
         'purpose': 'Removed Punctuations',
         'analyzed_text': analyzed
